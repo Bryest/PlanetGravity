@@ -11,11 +11,28 @@ public class CameraBehaviour : MonoBehaviour
     private float minFieldOfViewZ = 0;
     private float maxFieldOfViewZ = 100;
 
-    private Vector3 direction;
+    private Vector3 startPosition;
+    private float distance= 10;
+
+    private void Start()
+    {
+        startPosition = transform.position;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        // Camera position
+        /*Vector3 positionCamera = target.transform.right * 0 + target.transform.up * 11 +
+                                   target.transform.forward * -3.85f;
+        transform.position = positionCamera;*/
+        Vector3 positionCamera = startPosition - target.transform.position;
+        transform.position = target.transform.position.normalized * 5;
+
+        // Distance until the target
+        Vector3 direction = (target.transform.position - transform.position);
+        Vector3 directionNorm = (target.transform.position - transform.position).normalized;
+
         // Camera 3DMovement 
         if (Input.GetMouseButton(1))
         {
@@ -23,49 +40,21 @@ public class CameraBehaviour : MonoBehaviour
             transform.RotateAround(target.transform.position, transform.right, -Input.GetAxis("Mouse Y") * xSpeed);
         }
 
-        // Camera Zoom
-      
+        // Camera Zoom    
         /*
         float fieldOfViewInDepth = Camera.main.fieldOfView;
         fieldOfViewInDepth += Input.GetAxis("Mouse ScrollWheel") * -sensivity;
         fieldOfViewInDepth = Mathf.Clamp(fieldOfViewInDepth, minFieldOfViewZ, maxFieldOfViewZ);
         Camera.main.fieldOfView = fieldOfViewInDepth;
-       */
-
-        // Camera see look at
-        //transform.LookAt(target.transform.position,Vector3.forward);
-
-        // Distance until the target
-        Vector3 direction = (target.transform.position - transform.position);
-        Vector3 directionNorm = (target.transform.position - transform.position).normalized;
-        
-        float directionMag = (transform.position - target.transform.position).magnitude;
-        /*
-
+        */
         // Rotation
-        Quaternion rotateTo = Quaternion.LookRotation(direction);
-
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, Time.deltaTime * 300);
-        */
-
-        //Quaternion rotateTo = Quaternion.FromToRotation(Vector3.Cross(transform.position, direction), directionNorm);
         Quaternion rotateTo = Quaternion.LookRotation(direction,directionNorm);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, Time.deltaTime * 300);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, Time.deltaTime * 14);
 
-        // Convert to local vector
-        /*
-        Vector3 localVector = transform.rotation * Vector3.right;
+    }
 
-        transform.LookAt(target.transform.position, directionNorm);
-        */
+    private void LateUpdate()
+    {
 
-
-        // Camera position
-        
-        /*
-        Vector3 positionCamera = target.transform.right * 0 + target.transform.up * 11 +
-                                    target.transform.forward * -3.85f;
-        transform.position = positionCamera;*/
     }
 }
