@@ -356,8 +356,11 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.16f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Script/CameraBehaviour.cs"
 "Assets/Script/CameraPlaceHolder.cs"
+"Assets/Script/ForceController.cs"
 "Assets/Script/GlobalInputs.cs"
-"Assets/Script/PlayerMovement.cs"
+"Assets/Script/Planet/GravityBehaviour.cs"
+"Assets/Script/Planet/GravityOrbit.cs"
+"Assets/Script/Player/PlayerMovement.cs"
 -langversion:9.0
 
 /deterministic
